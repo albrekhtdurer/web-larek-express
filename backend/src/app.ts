@@ -1,6 +1,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
 
+import router from './routes/product';
+
 const app = express();
 
 const { PORT = 3000, DB_ADDRESS = 'mongodb://127.0.0.1:27017/weblarek' } = process.env;
@@ -16,6 +18,8 @@ const connectToDB = async () => {
 };
 
 connectToDB();
+
+app.use('/product', router);
 
 app.listen(PORT, () => {
   console.log(`App is listening on port ${PORT}`);
