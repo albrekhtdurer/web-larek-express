@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import Product from '../models/product';
 
 export const getProducts = (req: Request, res: Response) => Product.find({})
-  .then((result) => res.send({ items: result }))
+  .then((result) => res.send({ items: result, total: result.length }))
   .catch((err) => res.status(500).send({ message: 'Произошла ошибка' }));
 
 export const createProduct = (req: Request, res: Response) => {
