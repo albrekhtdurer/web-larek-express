@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import path from 'path';
 
 import router from './routes/product';
+import orderRouter from './routes/order';
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/product', router);
+app.use('/order', orderRouter);
 
 app.listen(PORT, () => {
   console.log(`App is listening on port ${PORT}`);
