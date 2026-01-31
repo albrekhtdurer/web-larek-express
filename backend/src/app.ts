@@ -1,5 +1,7 @@
+import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
+import path from 'path';
 
 import router from './routes/product';
 
@@ -18,6 +20,10 @@ const connectToDB = async () => {
 };
 
 connectToDB();
+
+app.use(cors());
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/product', router);
 
