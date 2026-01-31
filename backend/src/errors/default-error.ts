@@ -3,7 +3,7 @@ class DefaultError extends Error {
 
   constructor(message: string) {
     super(message);
-    this.statusCode = 409;
+    this.statusCode = 500;
   }
 }
 

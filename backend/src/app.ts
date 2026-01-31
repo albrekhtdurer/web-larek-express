@@ -1,10 +1,12 @@
 import cors from 'cors';
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import path from 'path';
 
 import router from './routes/product';
 import orderRouter from './routes/order';
+import errorHandler from './middlewares/error-handler';
+import NotFoundError from './errors/not-found-error';
 
 const app = express();
 
@@ -28,6 +30,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/product', router);
 app.use('/order', orderRouter);
+
+app.use((req:Request, res: Response, next: NextFunction) => {
+  next(new NotFoundError('Страница не найдена!'));
+});
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`App is listening on port ${PORT}`);
