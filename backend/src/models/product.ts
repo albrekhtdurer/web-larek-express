@@ -16,26 +16,26 @@ interface IImage {
 const imageSchema = new mongoose.Schema<IImage>({
   fileName: {
     type: String,
-    required: true,
+    required: [true, 'Поле "fileName" должно быть заполнено'],
   },
   originalName: {
     type: String,
-    required: true,
+    required: [true, 'Поле "originalName" должно быть заполнено'],
   },
 });
 
 const productSchema = new mongoose.Schema<IProduct>({
   title: {
     type: String,
-    required: true,
+    required: [true, 'Поле "title" должно быть заполнено'],
     unique: true,
-    minLength: 2,
-    maxLength: 30,
+    minLength: [2, 'Минимальная длина поля "title" - 2'],
+    maxLength: [30, 'Максимальная длина поля "title" - 30'],
   },
   image: imageSchema,
   category: {
     type: String,
-    required: true,
+    required: [true, 'Поле "category" должно быть заполнено'],
   },
   description: String,
   price: {
