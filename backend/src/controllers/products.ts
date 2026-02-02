@@ -7,6 +7,7 @@ export const getProducts = (req: Request, res: Response, next: NextFunction) => 
   .catch((err) => next(new DefaultError(`Ошибка сервера: ${err.message}`)));
 
 export const createProduct = (req: Request, res: Response, next: NextFunction) => {
+  console.log(req.body);
   const {
     description, image, title, category, price,
   } = req.body;
