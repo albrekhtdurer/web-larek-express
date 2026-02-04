@@ -5,9 +5,10 @@ import path from 'path';
 
 import router from './routes/product';
 import orderRouter from './routes/order';
+import authRouter from './routes/auth';
 import errorHandler from './middlewares/error-handler';
 import NotFoundError from './errors/not-found-error';
-import {requestLogger, errorLogger} from './middlewares/loggers';
+import { requestLogger, errorLogger } from './middlewares/loggers';
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/product', router);
 app.use('/order', orderRouter);
+app.use('/auth', authRouter);
 
 app.use((req:Request, res: Response, next: NextFunction) => {
   next(new NotFoundError('Страница не найдена!'));
