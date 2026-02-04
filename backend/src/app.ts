@@ -9,10 +9,9 @@ import authRouter from './routes/auth';
 import errorHandler from './middlewares/error-handler';
 import NotFoundError from './errors/not-found-error';
 import { requestLogger, errorLogger } from './middlewares/loggers';
+import { PORT, DB_ADDRESS } from './config';
 
 const app = express();
-
-const { PORT = 3000, DB_ADDRESS = 'mongodb://127.0.0.1:27017/weblarek' } = process.env;
 
 const dbName = 'weblarek';
 
@@ -37,7 +36,7 @@ app.use('/product', router);
 app.use('/order', orderRouter);
 app.use('/auth', authRouter);
 
-app.use((req:Request, res: Response, next: NextFunction) => {
+app.use((_req:Request, _res: Response, next: NextFunction) => {
   next(new NotFoundError('Страница не найдена!'));
 });
 

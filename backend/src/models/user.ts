@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 
 interface IToken {
@@ -9,6 +10,11 @@ interface IUser {
   email: string;
   password: string;
   tokens: IToken[];
+}
+
+interface IUserModel extends mongoose.Model<IUser> {
+  findUserByCredentials: (email: string, password: string) =>
+    Promise<mongoose.Document<unknown, any, IUser>>
 }
 
 const tokenSchema = new mongoose.Schema<IToken>({
@@ -39,4 +45,20 @@ const userSchema = new mongoose.Schema<IUser>({
   },
 });
 
-export default mongoose.model<IUser>('user', userSchema);
+userSchema.static('findUserByCredentials', function findUserByCredentials(email: string, password: string) {
+  return this.findOne({ email })
+    .then((user: IUser) => {
+      if (!user) {
+        return Promise.reject(new Error('Неправильная почта или пароль'));
+      }
+      return bcrypt.compare(password, user.password)
+        .then((matched: boolean) => {
+          if (!matched) {
+            return Promise.reject(new Error('Неправильная почта или пароль'));
+          }
+          return user;
+        });
+    });
+});
+
+export default mongoose.model<IUser, IUserModel>('user', userSchema);

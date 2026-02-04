@@ -23,3 +23,10 @@ const orderSchema = Joi.object({
 });
 
 export const validateOrderBody = celebrate({ [Segments.BODY]: orderSchema });
+
+const loginSchema = Joi.object({
+  name: Joi.string().required(),
+  password: Joi.string().required(),
+});
+
+export const validateLoginBody = celebrate({ [Segments.BODY]: loginSchema });
