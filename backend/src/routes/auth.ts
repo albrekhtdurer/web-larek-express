@@ -1,29 +1,25 @@
-import { Router, Request, Response } from 'express';
-import login from '../controllers/auth';
-import { validateLoginBody } from '../middlewares/validators';
+import { Router } from 'express';
+import {
+  login, register, getCurrentUser, logout,
+  refreshAccessToken,
+} from '../controllers/auth';
+import {
+  validateAuthorizationHeaders,
+  validateLoginBody,
+  validateRefreshTokenCookie,
+  validateRegisterBody,
+} from '../middlewares/validators';
 
 const authRouter = Router();
 
 authRouter.post('/login', validateLoginBody, login);
 
-authRouter.post('/register', (req: Request, res: Response) => {
-  console.log(req);
-  console.log(res);
-});
+authRouter.post('/register', validateRegisterBody, register);
 
-authRouter.get('/token', (req: Request, res: Response) => {
-  console.log(req);
-  console.log(res);
-});
+authRouter.get('/token', validateRefreshTokenCookie, refreshAccessToken);
 
-authRouter.get('/logout', (req: Request, res: Response) => {
-  console.log(req);
-  console.log(res);
-});
+authRouter.get('/logout', validateRefreshTokenCookie, logout);
 
-authRouter.post('/user', (req: Request, res: Response) => {
-  console.log(req);
-  console.log(res);
-});
+authRouter.get('/user', validateAuthorizationHeaders, getCurrentUser);
 
 export default authRouter;

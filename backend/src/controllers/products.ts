@@ -6,7 +6,7 @@ import DefaultError from '../errors/default-error';
 import ConflictError from '../errors/conflict-error';
 import BadRequestError from '../errors/bad-request-error';
 
-export const getProducts = (req: Request, res: Response, next: NextFunction) => Product.find({})
+export const getProducts = (_req: Request, res: Response, next: NextFunction) => Product.find({})
   .then((result) => res.send({ items: result, total: result.length }))
   .catch((err) => next(new DefaultError(`Ошибка сервера: ${err.message}`)));
 

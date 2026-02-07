@@ -25,8 +25,24 @@ const orderSchema = Joi.object({
 export const validateOrderBody = celebrate({ [Segments.BODY]: orderSchema });
 
 const loginSchema = Joi.object({
-  name: Joi.string().required(),
+  email: Joi.string().required(),
   password: Joi.string().required(),
 });
 
 export const validateLoginBody = celebrate({ [Segments.BODY]: loginSchema });
+
+const newUserSchema = Joi.object({
+  name: Joi.string().required(),
+  email: Joi.string().required(),
+  password: Joi.string().required(),
+});
+
+export const validateRegisterBody = celebrate({ [Segments.BODY]: newUserSchema });
+
+export const validateAuthorizationHeaders = celebrate(
+  { [Segments.HEADERS]: Joi.object({ authorization: Joi.string().required() }).unknown() },
+);
+
+export const validateRefreshTokenCookie = celebrate(
+  { [Segments.COOKIES]: Joi.object({ refreshTocken: Joi.string().required() }).unknown() },
+);
