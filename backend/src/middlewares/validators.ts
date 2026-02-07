@@ -44,5 +44,5 @@ export const validateAuthorizationHeaders = celebrate(
 );
 
 export const validateRefreshTokenCookie = celebrate(
-  { [Segments.COOKIES]: Joi.object({ refreshTocken: Joi.string().required() }).unknown() },
+  { [Segments.COOKIES]: Joi.object({ refreshToken: Joi.string().required() }).unknown() },
 );

@@ -39,14 +39,16 @@ const userSchema = new mongoose.Schema<IUser>({
   password: {
     type: String,
     required: [true, 'Поле  "password" должно быть заполнено'],
+    select: false,
   },
   tokens: {
     type: [tokenSchema],
+    select: false,
   },
 });
 
 userSchema.static('findUserByCredentials', function findUserByCredentials(email: string, password: string) {
-  return this.findOne({ email })
+  return this.findOne({ email }).select('+password')
     .then((user: IUser) => {
       if (!user) {
         return Promise.reject(new Error('Неправильная почта или пароль'));

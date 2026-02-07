@@ -28,7 +28,11 @@ export const login = (req: Request, res: Response, next: NextFunction) => {
           maxAge: ms('7d'),
           path: '/',
         });
-        res.send({ updatedUser, success: true, accessToken });
+        res.send({
+          user: updatedUser?.toObject({ versionKey: false }),
+          success: true,
+          accessToken,
+        });
       });
     })
     .catch((err) => next(new UnathorizedError(err.message)));
@@ -56,7 +60,11 @@ export const register = (req: Request, res: Response, next: NextFunction) => {
               maxAge: ms('7d'),
               path: '/',
             });
-            res.send({ updatedUser, success: true, accessToken });
+            res.send({
+              user: updatedUser?.toObject({ versionKey: false }),
+              success: true,
+              accessToken,
+            });
           });
         })
         .catch((err) => {
@@ -89,7 +97,7 @@ export const getCurrentUser = (req: Request, res: Response, next: NextFunction) 
       if (!user) {
         next(new NotFoundError('Пользователь не найден'));
       } else {
-        res.send({ sucess: true, user });
+        res.send({ sucess: true, user: user.toObject({ versionKey: false }) });
       }
     })
     .catch((err) => next(new DefaultError(`Ошибка сервера: ${err.message}`)));
@@ -143,7 +151,11 @@ export const refreshAccessToken = (req: Request, res: Response, next: NextFuncti
           maxAge: ms('7d'),
           path: '/',
         });
-        res.send({ updatedUser, success: true, accessToken });
+        res.send({
+          user: updatedUser?.toObject({ versionKey: false }),
+          success: true,
+          accessToken,
+        });
       });
     })
     .catch((err) => next(new DefaultError(`Ошибка сервера: ${err.message}`)));
