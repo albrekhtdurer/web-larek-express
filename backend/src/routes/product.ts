@@ -1,13 +1,15 @@
 import { Router } from 'express';
 
-import { getProducts, createProduct } from '../controllers/products';
+import { getProducts, createProduct, updateProduct } from '../controllers/products';
 
-import { validateProductBody } from '../middlewares/validators';
+import { validateProductBody, validateProductUpdateBody } from '../middlewares/validators';
 
 const router = Router();
 
 router.get('/', getProducts);
 
 router.post('/', validateProductBody, createProduct);
+
+router.patch('/:productId', validateProductUpdateBody, updateProduct);
 
 export default router;

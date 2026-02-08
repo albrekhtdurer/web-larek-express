@@ -13,6 +13,19 @@ const productSchema = Joi.object({
 
 export const validateProductBody = celebrate({ [Segments.BODY]: productSchema });
 
+const productUpdateSchema = Joi.object({
+  title: Joi.string(),
+  category: Joi.string(),
+  description: Joi.string(),
+  image: Joi.object({
+    fileName: Joi.string(),
+    originalName: Joi.string(),
+  }),
+  price: Joi.number().default(null),
+});
+
+export const validateProductUpdateBody = celebrate({ [Segments.BODY]: productUpdateSchema });
+
 const orderSchema = Joi.object({
   payment: Joi.string().required(),
   email: Joi.string().required(),
