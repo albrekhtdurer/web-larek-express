@@ -8,15 +8,16 @@ import {
 } from '../controllers/products';
 
 import { validateProductBody, validateProductUpdateBody } from '../middlewares/validators';
+import auth from '../middlewares/auth';
 
 const router = Router();
 
 router.get('/', getProducts);
 
-router.post('/', validateProductBody, createProduct);
+router.post('/', auth, validateProductBody, createProduct);
 
-router.patch('/:productId', validateProductUpdateBody, updateProduct);
+router.patch('/:productId', auth, validateProductUpdateBody, updateProduct);
 
-router.delete('/:productId', deleteProduct);
+router.delete('/:productId', auth, deleteProduct);
 
 export default router;

@@ -9,6 +9,7 @@ import {
   validateRefreshTokenCookie,
   validateRegisterBody,
 } from '../middlewares/validators';
+import auth from '../middlewares/auth';
 
 const authRouter = Router();
 
@@ -20,6 +21,6 @@ authRouter.get('/token', validateRefreshTokenCookie, refreshAccessToken);
 
 authRouter.get('/logout', validateRefreshTokenCookie, logout);
 
-authRouter.get('/user', validateAuthorizationHeaders, getCurrentUser);
+authRouter.get('/user', auth, validateAuthorizationHeaders, getCurrentUser);
 
 export default authRouter;
