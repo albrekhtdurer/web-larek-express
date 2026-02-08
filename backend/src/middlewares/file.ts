@@ -1,6 +1,7 @@
 import { Request } from 'express';
 import multer, { FileFilterCallback } from 'multer';
 import { nanoid } from 'nanoid';
+import path from 'path';
 
 const fileFilter = (_req: Request, file: Request['file'], cb: FileFilterCallback) => {
   const allowedFileTypes = ['image/png', 'image/jpg', 'image/jpeg'];
@@ -13,7 +14,7 @@ const fileFilter = (_req: Request, file: Request['file'], cb: FileFilterCallback
 
 const storage = multer.diskStorage({
   destination: (_req: Request, _file: Request['file'], cb) => {
-    cb(null, 'uploads/');
+    cb(null, path.join(__dirname, '../uploads'));
   },
   filename: (_req, file, cb) => {
     const splittedFilePath = file!.originalname.split('.');
