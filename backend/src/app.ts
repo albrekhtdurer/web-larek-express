@@ -7,6 +7,7 @@ import path from 'path';
 import router from './routes/product';
 import orderRouter from './routes/order';
 import authRouter from './routes/auth';
+import uploadRouter from './routes/upload';
 import errorHandler from './middlewares/error-handler';
 import NotFoundError from './errors/not-found-error';
 import { requestLogger, errorLogger } from './middlewares/loggers';
@@ -37,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/product', router);
 app.use('/order', orderRouter);
 app.use('/auth', authRouter);
+app.use('/upload', uploadRouter);
 
 app.use((_req:Request, _res: Response, next: NextFunction) => {
   next(new NotFoundError('Страница не найдена!'));
