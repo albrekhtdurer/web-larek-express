@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import fs from 'fs/promises';
 import multer, { FileFilterCallback } from 'multer';
 import { nanoid } from 'nanoid';
 import path from 'path';
@@ -24,8 +25,10 @@ const storage = multer.diskStorage({
   },
 });
 
-const fileMiddleware = multer({
+export const fileMiddleware = multer({
   storage, limits: { fieldSize: 5 * 1024 * 1024 }, fileFilter,
 });
 
-export default fileMiddleware;
+export const deleteFileMiddleware = (imagePath: string) => {
+  fs.unlink(path.join(__dirname, '../public', imagePath));
+};

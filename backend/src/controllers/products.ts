@@ -68,3 +68,12 @@ export const updateProduct = (req: Request, res: Response, next: NextFunction) =
       next(new DefaultError(`Ошибка сервера: ${err.message}`));
     });
 };
+
+export const deleteProduct = (req: Request, res: Response, next: NextFunction) => {
+  const { productId } = req.params;
+  Product.findOneAndDelete({ _id: productId })
+    .then((deleted) => {
+      res.send(deleted);
+    })
+    .catch((err) => next(new DefaultError(`Ошибка сервера: ${err.message}`)));
+};

@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+import { deleteFileMiddleware } from '../middlewares/file';
+
 export interface IProduct {
   title: string;
   image: string;
@@ -42,6 +44,11 @@ const productSchema = new mongoose.Schema<IProduct>({
     type: Number,
     default: null,
   },
+});
+
+productSchema.post('findOneAndDelete', (doc) => {
+  const imagePath = doc.image.fileName;
+  deleteFileMiddleware(imagePath);
 });
 
 export default mongoose.model<IProduct>('product', productSchema);
